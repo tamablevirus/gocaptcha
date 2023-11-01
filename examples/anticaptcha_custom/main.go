@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/justhyped/gocaptcha"
+	"github.com/tamablevirus/gocaptcha"
 	"net/http"
 	"time"
 )
