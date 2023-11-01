@@ -6,10 +6,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/justhyped/gocaptcha/internal"
 	"io"
 	"net/http"
 	"strconv"
+
+	"github.com/justhyped/gocaptcha/internal"
 )
 
 type AntiCaptcha struct {
@@ -204,6 +205,8 @@ func (a *AntiCaptcha) getTaskResult(ctx context.Context, settings *Settings, tas
 	type antiCapSolution struct {
 		RecaptchaResponse string `json:"gRecaptchaResponse"`
 		Text              string `json:"text"`
+		Token             string `json:"token"`
+		UserAgent         string `json:"userAgent"`
 	}
 
 	type resultResponse struct {
@@ -250,6 +253,10 @@ func (a *AntiCaptcha) getTaskResult(ctx context.Context, settings *Settings, tas
 
 	if respJson.Solution.Text != "" {
 		return respJson.Solution.Text, nil
+	}
+
+	if respJson.Solution.Token != "" {
+		return respJson.Solution.Token, nil
 	}
 
 	if respJson.Solution.RecaptchaResponse != "" {
